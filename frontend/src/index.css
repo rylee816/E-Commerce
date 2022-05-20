@@ -39,3 +39,7 @@ main {
   color: #000000;
   /* border: 1px solid transparent; */
 }
+
+.img-large {
+  max-width: 100%;
+}
