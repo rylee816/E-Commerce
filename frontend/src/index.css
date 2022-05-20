@@ -19,7 +19,7 @@ body {
 }
 
 main {
-  padding: 1rem;
+  padding: 1rem .5rem;
   flex: 1;
 }
 
@@ -27,23 +27,15 @@ main {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.2rem;
 }
 
-.product {
-  
-  padding: .5rem 1rem;
-  justify-content: center;
-  overflow: hidden;
-  background-color: white;
+.rating i {
+  color: #ffc000;
+  font-size: .8rem;
 }
 
-.product img {
-  width: 100%;
-  max-width: 250px;
-}
-
-.product-info {
-  padding: 1rem;
-  margin-top: 0;
+.btn-primary {
+  background-color: #f0c040;
+  color: #000000;
+  /* border: 1px solid transparent; */
 }
