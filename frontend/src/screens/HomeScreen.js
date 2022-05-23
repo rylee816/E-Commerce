@@ -1,18 +1,22 @@
 import React, { useEffect, useReducer, useState } from "react";
-import fetchData from "../reducers/fetchData.reducer";
+import Axios from 'axios';
+import dataReducer from "../reducers/fetchData.reducer";
 import logger from "use-reducer-logger";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Product from "../components/Product";
 import { Helmet } from "react-helmet-async";
+import Loader from "../components/Loader";
+import MessageBox from "../components/MessageBox";
+import {getError} from "../utils"
 
 function HomeScreen() {
   const [{ loading, error, products }, dispatch] = useReducer(
-    logger(fetchData),
+    logger(dataReducer),
     {
       products: [],
       loading: true,
-      error: "",
+      error: '',
     }
   );
 
@@ -20,11 +24,11 @@ function HomeScreen() {
     const fetchData = async function () {
       dispatch({ type: "FETCH_REQUEST" });
       try {
-        const result = await fetch("http://localhost:3001/api/products");
-        const data = await result.json();
+        const result = await Axios.get("http://localhost:3001/api/products");
+        const {data} = await result;
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
-        dispatch({ type: "FETCH_FAIL", payload: err.message });
+        dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
     fetchData();
@@ -38,11 +42,9 @@ function HomeScreen() {
       <h1>Featured Products</h1>
       <div className="products">
         {loading ? (
-          <div>
-            <h1>Loading...</h1>
-          </div>
+         <Loader />
         ) : error ? (
-          <div>{error}</div>
+          <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <Row>
             {products.map((product) => (
