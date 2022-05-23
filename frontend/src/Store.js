@@ -11,11 +11,10 @@ const initialState = {
 };
 
 
-
 function StoreProvider(props) {
     const [state, dispatch] = useReducer(cartReducer, initialState);
     const value = {state, dispatch}
-    console.log(state)
+    
   return (
     <Store.Provider value = {value}>{props.children}</Store.Provider>
   )
