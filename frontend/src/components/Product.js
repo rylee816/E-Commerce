@@ -11,7 +11,6 @@ function Product({ product }) {
     function addToCartHandler(){
         contextDispatch({type: 'CART_ADD_ITEM', payload:{...product, quantity: 1}})
     }
-    console.log(state.cart.cartItems)
 
   return (
     <Card className="px-2">

@@ -37,7 +37,6 @@ function ProductScreen() {
         const { data } = await result;
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
-        console.log(getError(error));
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
@@ -46,9 +45,18 @@ function ProductScreen() {
 
 
   const {state, dispatch: contextDispatch} = useContext(Store);
+  const {cart} = state;
   
-  function addToCartHandler(){
-    contextDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity: 1}})
+  const addToCartHandler = async () => {
+    const itemExists = cart.cartItems.find(item => item._id === product._id);
+    const quantity = itemExists ? itemExists.quantity + 1 : 1;
+
+    const {data} = await Axios.get(`http://localhost:3001/api/products/id/${product._id}`);
+    if (data.countInStock < quantity){
+      window.alert('We apologize, but this item is out of stock.');
+      return;
+    }
+    contextDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity}})
   }
   console.log(state.cart.cartItems)
   
