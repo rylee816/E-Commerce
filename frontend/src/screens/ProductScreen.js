@@ -4,7 +4,7 @@ import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import dataReducer from "../reducers/fetchData.reducer";
 import ListGroup from "react-bootstrap/ListGroup";
 import Rating from "../components/Rating";
@@ -16,6 +16,7 @@ import { getError } from "../utils";
 import { Store } from "../Store";
 
 function ProductScreen() {
+  const navigate = useNavigate()
   const { slug } = useParams();
   const [{ loading, error, products: product }, dispatch] = useReducer(
     dataReducer,
@@ -56,7 +57,8 @@ function ProductScreen() {
       window.alert('We apologize, but this item is out of stock.');
       return;
     }
-    contextDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity}})
+    contextDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity}});
+    navigate("/cart")
   }
   console.log(state.cart.cartItems)
   
