@@ -54,7 +54,7 @@ function ProductScreen() {
 
     const {data} = await Axios.get(`http://localhost:3001/api/products/id/${product._id}`);
     if (data.countInStock < quantity){
-      window.alert('We apologize, but this item is out of stock.');
+      window.alert(`We apologize, but ${data.name} is out of stock.`);
       return;
     }
     contextDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity}});
