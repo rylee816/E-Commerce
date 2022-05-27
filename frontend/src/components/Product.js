@@ -1,16 +1,35 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
-import Card from 'react-bootstrap/esm/Card';
+import Card from "react-bootstrap/esm/Card";
 import Rating from "./Rating";
 import { Store } from "../Store";
+import Axios from "axios";
 
 function Product({ product }) {
-    const {state, dispatch: contextDispatch} = useContext(Store);
+  const {
+    state: {
+      cart: { cartItems },
+    },
+    dispatch: contextDispatch,
+  } = useContext(Store);
 
-    function addToCartHandler(){
-        contextDispatch({type: 'CART_ADD_ITEM', payload:{...product, quantity: 1}})
+  const addToCartHandler = async (item) => {
+    const itemExists = cartItems.find((item) => item._id === product._id);
+    const quantity = itemExists ? itemExists.quantity + 1 : 1;
+    const { data } = await Axios.get(
+      `http://localhost:3001/api/products/id/${item._id}`
+    );
+
+    if (data.countInStock < quantity) {
+      alert(`Sorry but ${data.name} is out of stock.`);
+      return;
     }
+    contextDispatch({
+      type: "CART_ADD_ITEM",
+      payload: { ...item, quantity },
+    });
+  };
 
   return (
     <Card className="px-2">
@@ -18,13 +37,24 @@ function Product({ product }) {
         <img className="card-img-top" src={product.image} alt={product.name} />
       </Link>
       <Card.Body>
-      <Link to={`/product/${product.slug}`}>
+        <Link to={`/product/${product.slug}`}>
           <Card.Title>{product.name}</Card.Title>
         </Link>
-        <Rating rating={product.rating} numReviews={product.numReviews}/>
+        <Rating rating={product.rating} numReviews={product.numReviews} />
         <Card.Text>${product.price}</Card.Text>
         <div className="d-grid">
-        <Button onClick={addToCartHandler} className="btn btn-md btn-primary">Add to Cart</Button>
+          {product.countInStock === 0 ? (
+            <Button variant="light" disabled>
+              Out of Stock
+            </Button>
+          ) : (
+            <Button
+              onClick={() => addToCartHandler(product)}
+              className="btn btn-md btn-primary"
+            >
+              Add to Cart
+            </Button>
+          )}
         </div>
       </Card.Body>
     </Card>

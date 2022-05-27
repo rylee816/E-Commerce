@@ -6,7 +6,7 @@ import Row from "react-bootstrap/esm/Row";
 import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MessageBox from "../components/MessageBox";
 import { Store } from "../Store";
 import Axios from "axios";
@@ -18,6 +18,8 @@ function CartScreen() {
     },
     dispatch: contextDispatch,
   } = useContext(Store);
+
+  const navigate = useNavigate();
 
   let amountOfItems = cartItems.reduce((a, b) => a + b.quantity, 0);
   console.log(cartItems);
@@ -39,6 +41,10 @@ function CartScreen() {
 
   function deleteItemHandler(item){
       contextDispatch({type: 'CART_REMOVE_ITEM', payload: item})
+  }
+
+  const checkoutHandler = () => {
+      navigate('/signin?redirect=/shipping');
   }
 
   return (
@@ -119,6 +125,7 @@ function CartScreen() {
                       type="button"
                       variant="primary"
                       disabled={cartItems.length === 0}
+                      onClick={checkoutHandler}
                     >
                       Proceed to Checkout
                     </Button>
