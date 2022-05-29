@@ -3,6 +3,8 @@ import data from './data.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import seedRouter from './routes/seedRoutes.js';
+import productRouter from './routes/productRoutes.js';
 
 const app = express();
 app.use(express.json());
@@ -20,29 +22,9 @@ mongoose.connect(process.env.MONGODB_URI, {
 .catch(err => console.log(err.message))
 
 
-app.get("/api/products", (req, res) => {
-    res.send(data.products)
-})
+app.use('/api/seed', seedRouter);
+app.use('/api/products', productRouter);
 
-app.get("/api/products/:slug", (req, res) => {
-    let { slug } = req.params;
-    let product = data.products.find(product => product.slug === slug);
-    if(product) {
-        res.send(product);
-    } else {
-        res.status(404).send({message: 'Product Not Found'})
-    }
-});
-
-app.get("/api/products/id/:id", (req, res) => {
-    let { id } = req.params;
-    let product = data.products.find(product => product._id === id);
-    if(product) {
-        res.send(product);
-    } else {
-        res.status(404).send({message: 'Product Not Found'})
-    }
-});
 
 
 const port = process.env.PORT || 3001;
