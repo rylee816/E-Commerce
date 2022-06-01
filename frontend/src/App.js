@@ -14,7 +14,12 @@ import LoginScreen from "./screens/LoginScreen";
 import ShippingScreen from "./screens/ShippingScreen";
 
 function App() {
-  const {state: {cart, userInfo}} = useContext(Store);
+  const {state: {cart, userInfo}, dispatch: contextDispatch} = useContext(Store);
+
+  const signoutHandler = () => {
+    contextDispatch({type: 'USER_SIGNOUT'});
+    localStorage.removeItem('userInfo');
+  }
 
   return (
     <Router>
@@ -42,6 +47,14 @@ function App() {
                 <LinkContainer to="/orderhistory">
                   <NavDropdown.Item>Order History</NavDropdown.Item>
                 </LinkContainer>
+                <NavDropdown.Divider />
+                  <Link 
+                  className="dropdown-item" 
+                  to="#signout"
+                  onClick={signoutHandler}
+                  >
+                      Sign Out
+                  </Link>
               </NavDropdown>
             ) : (
               <Link to="/signin" className="nav-link">Sign In</Link>

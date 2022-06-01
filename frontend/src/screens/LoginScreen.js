@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Container from 'react-bootstrap/esm/Container'
 import Form from 'react-bootstrap/Form'
 import { Helmet } from 'react-helmet-async'
@@ -33,7 +33,13 @@ function LoginScreen() {
         } catch (err) {
             alert('Invalid email or password');
         }
-    }
+    };
+
+    useEffect(() => {
+        if (state.userInfo) {
+            navigate(redirect)
+        }
+    }, [navigate, redirect, state.userInfo])
 
   return (
     <Container className='small-container'>
