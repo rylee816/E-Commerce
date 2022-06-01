@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { Store } from "./Store";
 import CartScreen from "./screens/CartScreen";
 import LoginScreen from "./screens/LoginScreen";
+import ShippingScreen from "./screens/ShippingScreen";
 
 function App() {
   const {state: {cart}} = useContext(Store);
@@ -43,6 +44,7 @@ function App() {
             <Route path="/product/:slug" element={<ProductScreen/>}/>
             <Route path="/cart" element={<CartScreen />} />
             <Route path='/signin' element={<LoginScreen />}/>
+            <Route path='/shipping' element={<ShippingScreen />}/>
           </Routes>
         </Container>
         </main>

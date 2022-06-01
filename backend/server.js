@@ -7,10 +7,6 @@ import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import userRouter from './routes/userRoutes.js';
 
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(cors());
 dotenv.config();
 
 mongoose.connect(process.env.MONGODB_URI, {
@@ -20,7 +16,13 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => {
     console.log('Connected to Atlas DB');
 })
-.catch(err => console.log(err.message))
+.catch(err => console.log(err.message));
+
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(cors());
+
 
 
 app.use('/api/seed', seedRouter);
