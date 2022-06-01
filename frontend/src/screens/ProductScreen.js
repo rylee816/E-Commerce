@@ -33,10 +33,10 @@ function ProductScreen() {
       dispatch({ type: "FETCH_REQUEST" });
 
       try {
-        const result = await Axios.get(
+        const { data } = await Axios.get(
           `http://localhost:3001/api/products/${slug}`
         );
-        const { data } = await result;
+        
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
