@@ -5,6 +5,7 @@ import Card from "react-bootstrap/esm/Card";
 import Rating from "./Rating";
 import { Store } from "../Store";
 import Axios from "axios";
+import { toast } from "react-toastify";
 
 function Product({ product }) {
   const {
@@ -22,7 +23,7 @@ function Product({ product }) {
     );
 
     if (data.countInStock < quantity) {
-      alert(`Sorry but ${data.name} is out of stock.`);
+      toast.error(`Sorry but ${data.name} is out of stock.`);
       return;
     }
     contextDispatch({

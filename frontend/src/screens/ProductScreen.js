@@ -14,6 +14,7 @@ import Loader from "../components/Loader";
 import MessageBox from "../components/MessageBox";
 import { getError } from "../utils";
 import { Store } from "../Store";
+import { toast } from "react-toastify";
 
 function ProductScreen() {
   const navigate = useNavigate()
@@ -54,7 +55,7 @@ function ProductScreen() {
 
     const {data} = await Axios.get(`http://localhost:3001/api/products/id/${product._id}`);
     if (data.countInStock < quantity){
-      window.alert(`We apologize, but ${data.name} is out of stock.`);
+      toast.error(`We apologize, but ${data.name} is out of stock.`);
       return;
     }
     contextDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity}});

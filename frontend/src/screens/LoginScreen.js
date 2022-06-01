@@ -6,6 +6,8 @@ import { Helmet } from 'react-helmet-async'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Axios from 'axios';
 import { Store } from '../Store.js'
+import { toast } from 'react-toastify'
+import { getError } from '../utils.js'
 
 
 function LoginScreen() {
@@ -31,7 +33,7 @@ function LoginScreen() {
          navigate(redirect || '/');
 
         } catch (err) {
-            alert('Invalid email or password');
+            toast.error(getError(err))
         }
     };
 
