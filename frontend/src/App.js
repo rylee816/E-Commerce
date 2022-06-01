@@ -4,7 +4,8 @@ import HomeScreen from "./screens/HomeScreen";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from 'react-bootstrap/Nav';
 import Container from "react-bootstrap/Container";
-import {LinkContainer} from 'react-router-bootstrap';
+import LinkContainer from 'react-router-bootstrap/LinkContainer';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import Badge from 'react-bootstrap/Badge';
 import { useContext } from "react";
 import { Store } from "./Store";
@@ -13,7 +14,7 @@ import LoginScreen from "./screens/LoginScreen";
 import ShippingScreen from "./screens/ShippingScreen";
 
 function App() {
-  const {state: {cart}} = useContext(Store);
+  const {state: {cart, userInfo}} = useContext(Store);
 
   return (
     <Router>
@@ -33,6 +34,18 @@ function App() {
                 </Badge>
               )}
             </Link>
+            {userInfo ? (
+              <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                <LinkContainer to="/profile">
+                  <NavDropdown.Item>User Profile</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/orderhistory">
+                  <NavDropdown.Item>Order History</NavDropdown.Item>
+                </LinkContainer>
+              </NavDropdown>
+            ) : (
+              <Link to="/signin" className="nav-link">Sign In</Link>
+            )}
           </Nav>
           </Container>
         </Navbar>
