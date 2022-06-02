@@ -3,14 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
 import { Store } from '../Store.js';
+import { useNavigate } from 'react-router-dom';
 
 function ShippingScreen() {
-// const [fullName, setFullName] = useState('');
-// const [address, setAddress] = useState('');
-// const [city, setCity] = useState('');
-// const [shippingState, setShippingState] = useState('');
-// const [postalCode, setPostalCode] = useState('');
-// const [country, setCountry] = useState('');
 const [shippingState, setShippingState] = useState({
     fullName: '',
     address: '',
@@ -21,6 +16,7 @@ const [shippingState, setShippingState] = useState({
 })
 
 const {state, dispatch: contextDispatch} = useContext(Store);
+const navigate = useNavigate()
 
 const handleChange = (e) => {
     const {name, value} = e.target;
@@ -40,7 +36,17 @@ const submitHandler = async (e) => {
         state,
         postalCode,
         country
-    }})
+    }});
+
+    localStorage.setItem('shippingAddress', JSON.stringify({
+        fullName,
+        address,
+        city,
+        state,
+        postalCode,
+        country
+    }))
+    navigate('/payment')
 }
 
   return (
@@ -54,6 +60,7 @@ const submitHandler = async (e) => {
         <Form.Group className='mb-3' controlId='fullName'>
             <Form.Label>Full Name</Form.Label>
             <Form.Control
+            required
             name="fullName"
             value={shippingState.fullName}
             onChange={handleChange}
@@ -62,6 +69,7 @@ const submitHandler = async (e) => {
         <Form.Group className='mb-3' controlId='address'>
             <Form.Label>Street Address</Form.Label>
             <Form.Control
+            required
             value={shippingState.address}
             name="address"
             onChange={handleChange}
@@ -70,6 +78,7 @@ const submitHandler = async (e) => {
         <Form.Group className='mb-3' controlId='city'>
             <Form.Label>City</Form.Label>
             <Form.Control
+            required
             name="city"
             value={shippingState.city}
             onChange={handleChange}
@@ -78,6 +87,7 @@ const submitHandler = async (e) => {
         <Form.Group className='mb-3' controlId='state'>
             <Form.Label>State</Form.Label>
             <Form.Control
+            required
             name="state"
             value={shippingState.state}
             onChange={handleChange}
@@ -86,6 +96,7 @@ const submitHandler = async (e) => {
         <Form.Group className='mb-3' controlId='postalCode'>
             <Form.Label>Postal Code</Form.Label>
             <Form.Control
+            required
             name="postalCode"
             value={shippingState.postalCode}
             onChange={handleChange}
@@ -94,6 +105,7 @@ const submitHandler = async (e) => {
         <Form.Group className='mb-3' controlId='country'>
             <Form.Label>Country</Form.Label>
             <Form.Control
+            required
             name="country"
             value={shippingState.country}
             onChange={handleChange}
