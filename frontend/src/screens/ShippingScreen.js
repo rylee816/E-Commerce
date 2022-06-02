@@ -45,8 +45,9 @@ const submitHandler = async (e) => {
         state,
         postalCode,
         country
-    }))
-    navigate('/payment')
+    }));
+    
+    navigate('/payment');
 }
 
   return (
