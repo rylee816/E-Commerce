@@ -41,7 +41,7 @@ function LoginScreen() {
         if (state.userInfo) {
             navigate(redirect)
         }
-    }, [navigate, redirect, state.userInfo])
+    }, [navigate, redirect, state.userInfo]);
 
   return (
     <Container className='small-container'>

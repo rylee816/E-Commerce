@@ -23,6 +23,9 @@ const cartReducer = (state, action) => {
         case 'USER_SIGNOUT':
             return {...state, userInfo: null}
 
+        case 'SAVE_SHIPPING_ADDRESS':
+            console.log(action.payload)
+
     default: 
     return state;
     }
