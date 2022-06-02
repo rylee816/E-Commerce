@@ -32,7 +32,7 @@ function App() {
         <Navbar bg="dark" variant="dark">
           <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>Men Swear House</Navbar.Brand>
+            <Navbar.Brand>Men's Swear House</Navbar.Brand>
           </LinkContainer>
           <Nav className="me-auto">
             <Link to="/cart" className="nav-link">

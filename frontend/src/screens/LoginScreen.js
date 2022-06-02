@@ -19,7 +19,7 @@ function LoginScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {state, dispatch: contextDispatch} = useContext(Store);
-
+  
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
@@ -36,6 +36,7 @@ function LoginScreen() {
             toast.error(getError(err))
         }
     };
+   
 
     useEffect(() => {
         if (state.userInfo) {
