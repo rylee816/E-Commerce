@@ -22,6 +22,7 @@ function App() {
   const signoutHandler = () => {
     contextDispatch({type: 'USER_SIGNOUT'});
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('shippingAddress');
   }
 
   return (

@@ -12,7 +12,14 @@ const initialState = {
   cart: {
     shippingAddress: localStorage.getItem("shippingAddress")
       ? JSON.parse(localStorage.getItem("shippingAddress"))
-      : {},
+      : {
+        fullName: '',
+        address: '',
+        city: '',
+        state: '',
+        postalCode: '',
+        country: '',
+      },
     cartItems: localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [],
