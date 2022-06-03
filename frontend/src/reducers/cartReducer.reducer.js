@@ -28,7 +28,7 @@ const cartReducer = (state, action) => {
       return { ...state, userInfo: action.payload };
 
     case "USER_SIGNOUT":
-      return { ...state, userInfo: null, cart: {...state.cart, shippingAddress: {
+      return { ...state, userInfo: null, cart: {cartItems: [], shippingAddress: {
       fullName: '',
       address: '',
       city: '',
@@ -36,6 +36,7 @@ const cartReducer = (state, action) => {
       postalCode: '',
       country: '',}} 
     };
+    
 
     case "SAVE_SHIPPING_ADDRESS":
       return { ...state, cart: {...state.cart, shippingAddress: action.payload} };
