@@ -1,5 +1,5 @@
-import Button from 'react-bootstrap/Button'
 import React, { useContext, useEffect, useState } from 'react'
+import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/esm/Container'
 import Form from 'react-bootstrap/Form'
 import { Helmet } from 'react-helmet-async'
@@ -60,7 +60,7 @@ function LoginScreen() {
                 <Form.Control type='password' required onChange={(e) => setPassword(e.target.value)}/>
             </Form.Group>
             <div className="mb-3">
-                <Button variant='primary' type='submit'>Submit</Button>
+                <Button variant='primary' type='submit'>Log In</Button>
             </div>
             <div className="mb-3">
                 New customer? {' '}
