@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
@@ -6,6 +6,14 @@ import { Store } from '../Store.js';
 import { useNavigate } from 'react-router-dom';
 
 function ShippingScreen() {
+const {state, dispatch: contextDispatch} = useContext(Store);
+const {
+    userInfo,
+    cart: {shippingAddress}
+} = state;
+const navigate = useNavigate();
+
+
 const [shippingState, setShippingState] = useState({
     fullName: '',
     address: '',
@@ -13,10 +21,14 @@ const [shippingState, setShippingState] = useState({
     state: '',
     postalCode: '',
     country: '',
-})
+});
 
-const {state: {cart: {shippingAddress}}, dispatch: contextDispatch} = useContext(Store);
-const navigate = useNavigate()
+useEffect(() => {
+    if (!userInfo) {
+        navigate('/signin?redirect=/shipping');
+    }
+}, [userInfo, navigate]);
+
 
 const handleChange = (e) => {
     const {name, value} = e.target;
