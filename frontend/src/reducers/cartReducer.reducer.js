@@ -28,18 +28,14 @@ const cartReducer = (state, action) => {
       return { ...state, userInfo: action.payload };
 
     case "USER_SIGNOUT":
-      return { ...state, userInfo: null, cart: {cartItems: [], shippingAddress: {
-      fullName: '',
-      address: '',
-      city: '',
-      state: '',
-      postalCode: '',
-      country: '',}} 
-    };
+    return { ...state, userInfo: null, cart: {cartItems: [], paymentMethod:'', shippingAddress: {},}};
     
 
     case "SAVE_SHIPPING_ADDRESS":
       return { ...state, cart: {...state.cart, shippingAddress: action.payload} };
+
+    case "SAVE_PAYMENT_METHOD": 
+    return {...state, cart: {...state.cart, paymentMethod: action.payload}}
 
     default:
       return state;

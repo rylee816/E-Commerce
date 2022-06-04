@@ -16,12 +16,12 @@ const navigate = useNavigate();
 
 
 const [shippingState, setShippingState] = useState({
-    fullName: '',
-    address: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: '',
+    fullName: shippingAddress.fullName || '',
+    address: shippingAddress.address || '',
+    city: shippingAddress.city || '',
+    state: shippingAddress.state || '',
+    postalCode: shippingAddress.postalCode || '',
+    country: shippingAddress.country || '',
 });
 
 useEffect(() => {
@@ -77,7 +77,7 @@ const submitHandler = async (e) => {
             <Form.Control
             required
             name="fullName"
-            value={shippingState.fullName || shippingAddress?.fullName}
+            value={shippingState.fullName}
             onChange={handleChange}
              />
         </Form.Group>
@@ -85,7 +85,7 @@ const submitHandler = async (e) => {
             <Form.Label>Street Address</Form.Label>
             <Form.Control
             required
-            value={shippingState.address || shippingAddress?.address}
+            value={shippingState.address}
             name="address"
             onChange={handleChange}
              />
@@ -95,7 +95,7 @@ const submitHandler = async (e) => {
             <Form.Control
             required
             name="city"
-            value={shippingState.city || shippingAddress?.city}
+            value={shippingState.city}
             onChange={handleChange}
              />
         </Form.Group>
@@ -104,7 +104,7 @@ const submitHandler = async (e) => {
             <Form.Control
             required
             name="state"
-            value={shippingState.state || shippingAddress?.state}
+            value={shippingState.state}
             onChange={handleChange}
              />
         </Form.Group>
@@ -113,7 +113,7 @@ const submitHandler = async (e) => {
             <Form.Control
             required
             name="postalCode"
-            value={shippingState.postalCode || shippingAddress?.postalCode}
+            value={shippingState.postalCode}
             onChange={handleChange}
              />
         </Form.Group>
@@ -122,7 +122,7 @@ const submitHandler = async (e) => {
             <Form.Control
             required
             name="country"
-            value={shippingState.country || shippingAddress?.country}
+            value={shippingState.country}
             onChange={handleChange}
              />
         </Form.Group>
