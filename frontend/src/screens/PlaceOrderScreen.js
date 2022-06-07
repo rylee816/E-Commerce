@@ -1,15 +1,25 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
+import Axios from 'axios';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
 import Card from 'react-bootstrap/Card';
 import { Helmet } from 'react-helmet-async';
-import CheckoutSteps from '../components/CheckoutSteps';
-import { Store } from '../Store';
+import CheckoutSteps from '../components/CheckoutSteps.js';
+import { Store } from '../Store.js';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/esm/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+import reducer from '../reducers/fetchOrder.reducer.js';
+import { toast } from 'react-toastify';
+import { getError } from '../utils.js';
+import Loader from '../components/Loader.js';
 
 function PlaceOrderScreen() {
+const [{loading, error}, dispatch] = useReducer(reducer, {
+    loading: false,
+    error: ''
+});
+
 const { state, dispatch: contextDispatch } = useContext(Store);
 const { cart, userInfo } = state;
 const navigate = useNavigate();
@@ -28,7 +38,34 @@ cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
 
 const placeOrderHandler = async() => {
-    console.log(state)
+    try {
+        dispatch({type: 'CREATE_REQUEST'});
+       const { data } = await Axios.post('http://localhost:3001/api/orders',
+       {
+           orderItems: cart.cartItems,
+           shippingAddress: cart.shippingAddress,
+           paymentMethod: cart.paymentMethod,
+           itemsPrice: cart.itemsPrice,
+           shippingPrice: cart.shippingPrice,
+           taxPrice: cart.taxPrice,
+           totalPrice: cart.totalPrice,
+       },
+       {
+           headers: {
+               authorization: `Bearer ${userInfo.token}`
+           }
+       }
+       );
+       contextDispatch({ type: 'CART_CLEAR' });
+       dispatch({ type: 'CREATE_SUCCESS' });
+       localStorage.removeItem('cartItems');
+       navigate(`/orders/${data.order._id}`);
+       console.log(data);
+
+    } catch (err) {
+        dispatch({type: 'CREATE_FAIL'});
+        toast.error(getError(err));
+    }
 }
 
 useEffect(() => {
@@ -72,7 +109,7 @@ useEffect(() => {
                         <Card.Title className='mb-3'>Your Order</Card.Title>
                             <ListGroup variant="flush">
                                 {cart.cartItems.map(item => (
-                                    <ListGroup.Item key={item.id}>
+                                    <ListGroup.Item key={item._id}>
                                         <Row className='align-items-center'>
                                             <Col md={6}>
                                                 <img
@@ -136,6 +173,7 @@ useEffect(() => {
                                         Place Order
                                     </Button>
                                 </div>
+                                {loading && <Loader />}
                             </ListGroup.Item>
                         </ListGroup>
                     </Card.Body>
