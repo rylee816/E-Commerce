@@ -11,23 +11,66 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+import { toast } from 'react-toastify';
 
 
 function OrderDetailsScreen() {
   const { state } = useContext(Store);
   const { userInfo } = state;
-  const [{ products: order, loading, error }, dispatch] = useReducer(reducer, 
+  const [{ products: order, loading, error, loadingPay, errorPay, successPay }, dispatch] = useReducer(reducer, 
     {
       products: {},
       loading: true,
-      error: ''
+      error: '',
+      loadingPay: false,
+      errorPay: '',
+      successPay: ''
     }
     );
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
+  function createOrder(data, actions) {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {value: order.totalPrice},
+        },
+      ],
+    })
+    .then(orderId => {
+      return orderId;
+    })
+  }
+
+  function onApprove(data, actions) {
+    return actions.order.capture().then(async function(details){
+      try {
+        dispatch({ type: 'PAY_REQUEST' });
+        const { data } = await Axios.put(`http://localhost:3001/api/orders/${order._id}/pay`,
+        details,
+        {
+          headers : {authorization: `Bearer ${userInfo.token}`}
+        }
+        );
+        dispatch({ type: 'PAY_SUCCESS', payload: data });
+        toast.success('Payment accepted!');
+      } catch (err) {
+        dispatch({type: 'PAY_FAIL', payload: getError(err)});
+        toast.error(getError(errorPay));
+      }
+    })
+  }
+
+  function onError(err){
+    toast.error(getError(err));
+  }
   
   useEffect(() => {
-    const fetchOrder = async() => {
+    const fetchOrder = async () => {
       dispatch({type: 'FETCH_REQUEST'})
       try {
         const {data} = await Axios.get(`http://localhost:3001/api/orders/${id}`, {
@@ -43,11 +86,29 @@ function OrderDetailsScreen() {
       return navigate('/signin');
     }
 
-    if (!order._id || (order._id && order._id !== id)){
-      fetchOrder()
+    if (!order._id || successPay || (order._id && order._id !== id)){
+      fetchOrder();
+      if (successPay) {
+        dispatch({type: 'PAY_RESET'});
+      }
+    } else {
+      const loadPaypalScript = async () => {
+        const { data: clientId } = await Axios.get('http://localhost:3001/api/keys/paypal', {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        });
+        paypalDispatch({
+          type: 'resetOptions',
+          value: {
+            'client-id': clientId,
+            currency: 'USD'
+          },
+        });
+        paypalDispatch({type: 'setLoadingStatus', value: 'pending'});
+      }
+      loadPaypalScript();
     }
 
-  }, [order, navigate, userInfo, order._id, id])
+  }, [order, navigate, userInfo, order._id, id, paypalDispatch, successPay])
 
 console.log(order);
   return loading ? (
@@ -86,9 +147,9 @@ console.log(order);
                 <Card.Text>
                 <strong>Payment Method:</strong>{' '}{order.paymentMethod}
                 </Card.Text>
-                {order.isDelivered ? (
-                  <MessageBox variant="sucess">
-                    Paid at {order.payedAt}
+                {order.isPaid ? (
+                  <MessageBox variant="success">
+                    Paid at {order.paidAt}
                   </MessageBox>
                 ) : <MessageBox variant="danger">Payment Pending</MessageBox>}
               </Card.Body>
@@ -105,7 +166,7 @@ console.log(order);
                             <Link  to={`/product/${item.slug}`}>{item.name}</Link>
                           </Col>
                           <Col md={3}>
-                            <span>{item.quantity}</span>
+                            <span>({item.quantity})</span>
                           </Col>
                           <Col md={3}>${item.price}</Col>
                         </Row>
@@ -144,6 +205,22 @@ console.log(order);
                           <Col>${order.totalPrice.toFixed(2)}</Col>
                         </Row>
                       </ListGroup.Item>
+                      {!order.isPaid && (
+                        <ListGroup.Item>
+                          {isPending ? (
+                            <Loader />
+                          ) : (
+                            <div>
+                              <PayPalButtons
+                              createOrder={createOrder}
+                              onApprove={onApprove}
+                              onError={onError}
+                              ></PayPalButtons>
+                            </div>
+                          )}
+                          {loadingPay && (<Loader />)}
+                        </ListGroup.Item>
+                      )}
                     </ListGroup>
               </Card.Body>
             </Card>

@@ -15,7 +15,7 @@ function HomeScreen() {
     logger(dataReducer),
     {
       products: [],
-      loading: true,
+      loading: false,
       error: '',
     }
   );
