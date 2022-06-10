@@ -73,7 +73,7 @@ function OrderDetailsScreen() {
     const fetchOrder = async () => {
       dispatch({type: 'FETCH_REQUEST'})
       try {
-        const {data} = await Axios.get(`http://localhost:3001/api/orders/${id}`, {
+        const { data } = await Axios.get(`http://localhost:3001/api/orders/${id}`, {
           headers: { authorization: `Bearer ${userInfo.token}` }
         });
         dispatch({type: 'FETCH_SUCCESS', payload: data})

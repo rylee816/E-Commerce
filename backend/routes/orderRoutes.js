@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import expressAsyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
 import { isAuth } from "../utils.js";
@@ -19,6 +19,15 @@ orderRouter.post('/', isAuth, expressAsyncHandler(async(req, res) => {
 
     const order = await newOrder.save();
     res.status(201).send({message: 'New Order Created', order})
+}));
+
+orderRouter.get('/history', isAuth, expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({user: req.user._id});
+    if (orders) {
+        res.send(orders)
+    } else {
+        res.status(404).send({message: 'Could not retrieve orders'})
+    }
 }));
 
 
@@ -53,5 +62,10 @@ orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
     }
   })
 );
+
+// orderRouter.get('/history', isAuth, expressAsyncHandler(async (req, res) => {
+//     res.send('Hello')
+// }))
+
 
 export default orderRouter;

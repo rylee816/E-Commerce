@@ -18,6 +18,7 @@ import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 import SignupScreen from "./screens/SignupScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderDetailsScreen from "./screens/OrderDetailsScreen";
+import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 
 function App() {
   const {state: {cart, userInfo}, dispatch: contextDispatch} = useContext(Store);
@@ -34,12 +35,14 @@ function App() {
       <div className="d-flex flex-column site-container">
       <ToastContainer position="top-center" limit={1} />
         <header>
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="dark" variant="dark" expand="lg">
           <Container>
           <LinkContainer to="/">
             <Navbar.Brand>Men's Swear House</Navbar.Brand>
           </LinkContainer>
-          <Nav className="me-auto">
+          <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+            <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto w-100 justify-content-end">
             <Link to="/cart" className="nav-link">
               Cart
               {cart.cartItems.length > 0 && (
@@ -69,6 +72,7 @@ function App() {
               <Link to="/signin" className="nav-link">Sign In</Link>
             )}
           </Nav>
+          </Navbar.Collapse>
           </Container>
         </Navbar>
         </header>
@@ -84,6 +88,7 @@ function App() {
             <Route path='/payment' element={<PaymentMethodScreen />}/>
             <Route path='/placeorder' element={<PlaceOrderScreen />}/>
             <Route path='/orders/:id' element={<OrderDetailsScreen />}/>
+            <Route path='/orderhistory' element={<OrderHistoryScreen />}/>
           </Routes>
         </Container>
         </main>
