@@ -31,7 +31,7 @@ cart.itemsPrice = round2(
 );
 cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
 
-cart.taxPrice = round2(cart.itemsPrice * .15);
+cart.taxPrice = round2(cart.itemsPrice * .08);
 
 cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
