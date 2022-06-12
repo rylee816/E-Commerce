@@ -47,7 +47,7 @@ function ProfileScreen() {
 
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
-      const { data } = await Axios.put('http://localhost:3001/api/users/profilE', {
+      const { data } = await Axios.put('http://localhost:3001/api/users/profile', {
         name,
         email,
         password
@@ -63,10 +63,9 @@ function ProfileScreen() {
 
     } catch (err) {
       dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
-      toast.error(getError(err))
+      toast.error(getError(err));
     }
   }
-
   
   return loading ? (
     <Loader />

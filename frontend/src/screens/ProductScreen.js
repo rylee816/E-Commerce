@@ -61,7 +61,6 @@ function ProductScreen() {
     contextDispatch({type: 'CART_ADD_ITEM', payload: {...product, quantity}});
     navigate("/cart")
   }
-  console.log(state.cart.cartItems)
   
   return loading ? (
     <Loader />

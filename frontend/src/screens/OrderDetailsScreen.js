@@ -110,7 +110,6 @@ function OrderDetailsScreen() {
 
   }, [order, navigate, userInfo, order._id, id, paypalDispatch, successPay])
 
-console.log(order);
   return loading ? (
     <Loader />
   )

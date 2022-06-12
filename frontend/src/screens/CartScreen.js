@@ -21,7 +21,6 @@ function CartScreen() {
   const navigate = useNavigate();
 
   let amountOfItems = cartItems.reduce((a, b) => a + b.quantity, 0);
-  console.log(cartItems);
 
   const updateCartHandler = async (item, quantity) => {
     const { data } = await Axios.get(

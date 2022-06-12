@@ -37,7 +37,6 @@ function OrderHistoryScreen() {
         }
             fetchOrders();   
     }, [userInfo, navigate]);
-    console.log(orders)
 
   return (
     <div>
