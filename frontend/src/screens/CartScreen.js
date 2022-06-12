@@ -68,7 +68,7 @@ function CartScreen() {
                         alt={item.name}
                         className="img-fluid rounded img-thumbnail"
                       />{" "}
-                      <Link to={`/product/${item.slug}`}>{item.name}</Link>
+                      <Link to={`/product/${item.slug}`}>{item.name.substring(0, 20)}</Link>
                     </Col>
                     <Col md={3}>
                       <Button

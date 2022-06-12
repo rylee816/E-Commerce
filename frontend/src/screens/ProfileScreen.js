@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useState, useReducer } from "react";
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { Store } from "../Store";
