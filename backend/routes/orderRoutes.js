@@ -63,9 +63,6 @@ orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
   })
 );
 
-// orderRouter.get('/history', isAuth, expressAsyncHandler(async (req, res) => {
-//     res.send('Hello')
-// }))
 
 
 export default orderRouter;
