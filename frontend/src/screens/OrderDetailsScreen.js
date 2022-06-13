@@ -100,7 +100,7 @@ function OrderDetailsScreen() {
           type: 'resetOptions',
           value: {
             'client-id': clientId,
-            currency: 'USD'
+            'currency': 'USD'
           },
         });
         paypalDispatch({type: 'setLoadingStatus', value: 'pending'});
