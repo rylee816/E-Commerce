@@ -105,7 +105,9 @@ function OrderDetailsScreen() {
         });
         paypalDispatch({type: 'setLoadingStatus', value: 'pending'});
       }
-      loadPaypalScript();
+      setTimeout(() => {
+        loadPaypalScript();
+      }, 2000)
     }
 
   }, [order, navigate, userInfo, order._id, id, paypalDispatch, successPay])
