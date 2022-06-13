@@ -1,18 +1,18 @@
 import React, { useEffect, useReducer, useState } from "react";
 import Axios from 'axios';
 import dataReducer from "../reducers/fetchData.reducer";
-import logger from "use-reducer-logger";
+// import logger from "use-reducer-logger";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Product from "../components/Product";
 import { Helmet } from "react-helmet-async";
 import Loader from "../components/Loader";
 import MessageBox from "../components/MessageBox";
-import {getError} from "../utils"
+import { getError } from "../utils"
 
 function HomeScreen() {
   const [{ loading, error, products }, dispatch] = useReducer(
-    logger(dataReducer),
+    dataReducer,
     {
       products: [],
       loading: false,
