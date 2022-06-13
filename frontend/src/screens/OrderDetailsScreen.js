@@ -110,7 +110,7 @@ function OrderDetailsScreen() {
       }, 2000)
     }
 
-  }, [order, navigate, userInfo, order._id, id, paypalDispatch, successPay])
+  }, [order, navigate, userInfo, id, paypalDispatch, successPay])
 
   return loading ? (
     <Loader />
