@@ -71,8 +71,8 @@ function OrderDetailsScreen() {
   
   useEffect(() => {
     const fetchOrder = async () => {
-      dispatch({type: 'FETCH_REQUEST'})
       try {
+        dispatch({type: 'FETCH_REQUEST'})
         const { data } = await Axios.get(`http://localhost:3001/api/orders/${id}`, {
           headers: { authorization: `Bearer ${userInfo.token}` }
         });
@@ -100,7 +100,7 @@ function OrderDetailsScreen() {
           type: 'resetOptions',
           value: {
             'client-id': clientId,
-            'currency': 'USD'
+            currency: 'USD'
           },
         });
         paypalDispatch({type: 'setLoadingStatus', value: 'pending'});
