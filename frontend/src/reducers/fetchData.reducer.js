@@ -11,7 +11,7 @@ const reducer = (state, action) => {
         case 'PAY_SUCCESS':
             return { ...state, loadingPay: false, successPay: true };
         case 'PAY_FAIL': 
-            return { ...state, loadingPay: false, errorPay: action.payload };
+            return { ...state, loadingPay: false };
         case 'PAY_RESET': {
             return { ...state, loadingPay: false, successPay: false };
         }

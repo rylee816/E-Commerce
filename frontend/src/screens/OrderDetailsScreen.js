@@ -25,7 +25,7 @@ function OrderDetailsScreen() {
       error: '',
       loadingPay: false,
       errorPay: '',
-      successPay: ''
+      successPay: false
     }
     );
   const { id } = useParams();
@@ -37,7 +37,7 @@ function OrderDetailsScreen() {
     return actions.order.create({
       purchase_units: [
         {
-          amount: {value: order.totalPrice},
+          amount: { value: order.totalPrice },
         },
       ],
     })
