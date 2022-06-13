@@ -93,7 +93,7 @@ function OrderDetailsScreen() {
       }
     } else {
       const loadPaypalScript = async () => {
-        const { data: clientId } = await Axios.get('/api/keys/paypal', {
+        const { data: clientId } = await Axios.get('http://localhost:3001/api/keys/paypal', {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         paypalDispatch({
