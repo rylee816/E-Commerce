@@ -23,7 +23,7 @@ function LoginScreen() {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-         const { data } = await Axios.post('http://localhost:3001/api/users/signin', {
+         const { data } = await Axios.post('/api/users/signin', {
              email,
              password
          });
