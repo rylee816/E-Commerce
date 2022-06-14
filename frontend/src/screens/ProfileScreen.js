@@ -47,7 +47,7 @@ function ProfileScreen() {
 
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
-      const { data } = await Axios.put('http://localhost:3001/api/users/profile', {
+      const { data } = await Axios.put('/api/users/profile', {
         name,
         email,
         password

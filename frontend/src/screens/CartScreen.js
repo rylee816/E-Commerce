@@ -24,7 +24,7 @@ function CartScreen() {
 
   const updateCartHandler = async (item, quantity) => {
     const { data } = await Axios.get(
-      `http://localhost:3001/api/products/id/${item._id}`
+      `/api/products/id/${item._id}`
     );
     
     if (data.countInStock < item.quantity){

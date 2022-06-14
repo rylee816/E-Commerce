@@ -19,7 +19,7 @@ function Product({ product }) {
     const itemExists = cartItems.find((item) => item._id === product._id);
     const quantity = itemExists ? itemExists.quantity + 1 : 1;
     const { data } = await Axios.get(
-      `http://localhost:3001/api/products/id/${item._id}`
+      `/api/products/id/${item._id}`
     );
 
     if (data.countInStock < quantity) {

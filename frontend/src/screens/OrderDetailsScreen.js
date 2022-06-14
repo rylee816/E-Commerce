@@ -50,7 +50,7 @@ function OrderDetailsScreen() {
     return actions.order.capture().then(async function(details){
       try {
         dispatch({ type: 'PAY_REQUEST' });
-        const { data } = await Axios.put(`http://localhost:3001/api/orders/${order._id}/pay`,
+        const { data } = await Axios.put(`/api/orders/${order._id}/pay`,
         details,
         {
           headers : {authorization: `Bearer ${userInfo.token}`}
@@ -73,7 +73,7 @@ function OrderDetailsScreen() {
     const fetchOrder = async () => {
       try {
         dispatch({type: 'FETCH_REQUEST'})
-        const { data } = await Axios.get(`http://localhost:3001/api/orders/${id}`, {
+        const { data } = await Axios.get(`/api/orders/${id}`, {
           headers: { authorization: `Bearer ${userInfo.token}` }
         });
         dispatch({type: 'FETCH_SUCCESS', payload: data})
@@ -93,7 +93,7 @@ function OrderDetailsScreen() {
       }
     } else {
       const loadPaypalScript = async () => {
-        const { data: clientId } = await Axios.get('http://localhost:3001/api/keys/paypal', {
+        const { data: clientId } = await Axios.get('/api/keys/paypal', {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         paypalDispatch({

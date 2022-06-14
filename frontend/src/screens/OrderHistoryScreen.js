@@ -27,7 +27,7 @@ function OrderHistoryScreen() {
         dispatch({ type: 'FETCH_REQUEST' });
         const fetchOrders = async () => {
             try {
-                const { data } = await Axios.get(`http://localhost:3001/api/orders/history`, {
+                const { data } = await Axios.get(`/api/orders/history`, {
                     headers: { authorization: `Bearer ${userInfo.token}` }
                 });
                 dispatch({ type: 'FETCH_SUCCESS', payload: data });

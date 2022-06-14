@@ -34,7 +34,7 @@ function ProductScreen() {
 
       try {
         const { data } = await Axios.get(
-          `http://localhost:3001/api/products/${slug}`
+          `/api/products/${slug}`
         );
         
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -53,7 +53,7 @@ function ProductScreen() {
     const itemExists = cart.cartItems.find(item => item._id === product._id);
     const quantity = itemExists ? itemExists.quantity + 1 : 1;
 
-    const {data} = await Axios.get(`http://localhost:3001/api/products/id/${product._id}`);
+    const {data} = await Axios.get(`/api/products/id/${product._id}`);
     if (data.countInStock < quantity){
       toast.error(`We apologize, but ${data.name} is out of stock.`);
       return;

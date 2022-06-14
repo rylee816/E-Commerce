@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import Axios from 'axios';
 import dataReducer from "../reducers/fetchData.reducer";
 // import logger from "use-reducer-logger";

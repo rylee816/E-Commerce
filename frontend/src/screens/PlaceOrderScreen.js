@@ -40,7 +40,7 @@ cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 const placeOrderHandler = async() => {
     try {
         dispatch({type: 'CREATE_REQUEST'});
-       const { data } = await Axios.post('http://localhost:3001/api/orders',
+       const { data } = await Axios.post('/api/orders',
        {
            orderItems: cart.cartItems,
            shippingAddress: cart.shippingAddress,

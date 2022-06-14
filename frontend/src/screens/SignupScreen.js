@@ -35,7 +35,7 @@ function SignupScreen() {
     }
 
     try {
-     const { data } = await Axios.post('http://localhost:3001/api/users/signup', {
+     const { data } = await Axios.post('/api/users/signup', {
          name,
          email,
          password,
