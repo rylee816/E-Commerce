@@ -24,8 +24,7 @@ function HomeScreen() {
     const fetchData = async function () {
       dispatch({ type: "FETCH_REQUEST" });
       try {
-        const result = await Axios.get("/api/products");
-        const {data} = await result;
+        const { data } = await Axios.get("/api/products");
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
