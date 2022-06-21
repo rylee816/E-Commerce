@@ -8,7 +8,10 @@ import Product from "../components/Product";
 import { Helmet } from "react-helmet-async";
 import Loader from "../components/Loader";
 import MessageBox from "../components/MessageBox";
-import { getError } from "../utils"
+import { getError } from "../utils";
+
+console.log(process.env.REACT_APP_BASE_URL);
+const baseUrl = "http://localhost:3001" || ''
 
 function HomeScreen() {
   const [{ loading, error, products }, dispatch] = useReducer(
@@ -24,7 +27,7 @@ function HomeScreen() {
     const fetchData = async function () {
       dispatch({ type: "FETCH_REQUEST" });
       try {
-        const { data } = await Axios.get("/api/products");
+        const { data } = await Axios.get(`${baseUrl}/api/products`);
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
