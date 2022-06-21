@@ -8,10 +8,8 @@ import Product from "../components/Product";
 import { Helmet } from "react-helmet-async";
 import Loader from "../components/Loader";
 import MessageBox from "../components/MessageBox";
-import { getError } from "../utils";
+import {baseUrl, getError } from "../utils";
 
-console.log(process.env.REACT_APP_BASE_URL);
-const baseUrl = process.env.REACT_APP_BASE_URL || '';
 
 function HomeScreen() {
   const [{ loading, error, products }, dispatch] = useReducer(

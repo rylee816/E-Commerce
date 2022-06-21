@@ -12,9 +12,10 @@ import Button from "react-bootstrap/esm/Button";
 import { Helmet } from "react-helmet-async";
 import Loader from "../components/Loader";
 import MessageBox from "../components/MessageBox";
-import { getError } from "../utils";
+import {baseUrl, getError } from "../utils";
 import { Store } from "../Store";
 import { toast } from "react-toastify";
+
 
 function ProductScreen() {
   const navigate = useNavigate()
@@ -34,7 +35,7 @@ function ProductScreen() {
 
       try {
         const { data } = await Axios.get(
-          `/api/products/${slug}`
+          `${baseUrl}/api/products/${slug}`
         );
         
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -53,7 +54,7 @@ function ProductScreen() {
     const itemExists = cart.cartItems.find(item => item._id === product._id);
     const quantity = itemExists ? itemExists.quantity + 1 : 1;
 
-    const {data} = await Axios.get(`/api/products/id/${product._id}`);
+    const {data} = await Axios.get(`${baseUrl}/api/products/id/${product._id}`);
     if (data.countInStock < quantity){
       toast.error(`We apologize, but ${data.name} is out of stock.`);
       return;

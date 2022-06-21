@@ -5,7 +5,7 @@ import reducer from '../reducers/fetchData.reducer.js';
 import Loader from '../components/Loader';
 import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
-import { getError } from '../utils.js';
+import {baseUrl, getError } from '../utils.js';
 import { Helmet } from "react-helmet-async";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -50,7 +50,7 @@ function OrderDetailsScreen() {
     return actions.order.capture().then(async function(details){
       try {
         dispatch({ type: 'PAY_REQUEST' });
-        const { data } = await Axios.put(`/api/orders/${order._id}/pay`,
+        const { data } = await Axios.put(`${baseUrl}/api/orders/${order._id}/pay`,
         details,
         {
           headers : {authorization: `Bearer ${userInfo.token}`}
@@ -73,7 +73,7 @@ function OrderDetailsScreen() {
     const fetchOrder = async () => {
       try {
         dispatch({type: 'FETCH_REQUEST'})
-        const { data } = await Axios.get(`/api/orders/${id}`, {
+        const { data } = await Axios.get(`${baseUrl}/api/orders/${id}`, {
           headers: { authorization: `Bearer ${userInfo.token}` }
         });
         dispatch({type: 'FETCH_SUCCESS', payload: data})
@@ -93,7 +93,7 @@ function OrderDetailsScreen() {
       }
     } else {
       const loadPaypalScript = async () => {
-        const { data: clientId } = await Axios.get('/api/keys/paypal', {
+        const { data: clientId } = await Axios.get(`${baseUrl}/api/keys/paypal`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         paypalDispatch({

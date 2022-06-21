@@ -11,7 +11,7 @@ import Button from 'react-bootstrap/esm/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import reducer from '../reducers/fetchOrder.reducer.js';
 import { toast } from 'react-toastify';
-import { getError } from '../utils.js';
+import { baseUrl, getError } from '../utils.js';
 import Loader from '../components/Loader.js';
 
 function PlaceOrderScreen() {
@@ -40,7 +40,7 @@ cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 const placeOrderHandler = async() => {
     try {
         dispatch({type: 'CREATE_REQUEST'});
-       const { data } = await Axios.post('/api/orders',
+       const { data } = await Axios.post(`${baseUrl}/api/orders`,
        {
            orderItems: cart.cartItems,
            shippingAddress: cart.shippingAddress,

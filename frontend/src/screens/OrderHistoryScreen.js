@@ -6,7 +6,7 @@ import MessageBox from '../components/MessageBox';
 import reducer from '../reducers/fetchData.reducer';
 import Axios from 'axios';
 import { Store } from '../Store';
-import { getError } from '../utils';
+import {baseUrl, getError } from '../utils';
 import Button from 'react-bootstrap/Button';
 
 
@@ -27,7 +27,7 @@ function OrderHistoryScreen() {
         dispatch({ type: 'FETCH_REQUEST' });
         const fetchOrders = async () => {
             try {
-                const { data } = await Axios.get(`/api/orders/history`, {
+                const { data } = await Axios.get(`${baseUrl}/api/orders/history`, {
                     headers: { authorization: `Bearer ${userInfo.token}` }
                 });
                 dispatch({ type: 'FETCH_SUCCESS', payload: data });

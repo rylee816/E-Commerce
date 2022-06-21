@@ -3,3 +3,5 @@ export const getError = error => {
     ? error.response.data.message 
     : error.message
 }
+
+export const baseUrl = process.env.REACT_APP_BASE_URL || '';

@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Axios from 'axios';
 import { Store } from '../Store.js'
 import { toast } from 'react-toastify'
-import { getError } from '../utils.js'
+import {baseUrl, getError } from '../utils.js'
 
 
 function LoginScreen() {
@@ -23,7 +23,7 @@ function LoginScreen() {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-         const { data } = await Axios.post('/api/users/signin', {
+         const { data } = await Axios.post(`${baseUrl}/api/users/signin`, {
              email,
              password
          });

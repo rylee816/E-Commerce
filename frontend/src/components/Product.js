@@ -6,6 +6,8 @@ import Rating from "./Rating";
 import { Store } from "../Store";
 import Axios from "axios";
 import { toast } from "react-toastify";
+import { baseUrl } from "../utils";
+
 
 function Product({ product }) {
   const {
@@ -19,7 +21,7 @@ function Product({ product }) {
     const itemExists = cartItems.find((item) => item._id === product._id);
     const quantity = itemExists ? itemExists.quantity + 1 : 1;
     const { data } = await Axios.get(
-      `/api/products/id/${item._id}`
+      `${baseUrl}/api/products/id/${item._id}`
     );
 
     if (data.countInStock < quantity) {

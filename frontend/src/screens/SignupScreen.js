@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { Store } from "../Store.js";
 import { toast } from "react-toastify";
-import { getError } from "../utils.js";
+import {baseUrl, getError } from "../utils.js";
 
 function SignupScreen() {
   const [name, setName] = useState("");
@@ -35,7 +35,7 @@ function SignupScreen() {
     }
 
     try {
-     const { data } = await Axios.post('/api/users/signup', {
+     const { data } = await Axios.post(`${baseUrl}/api/users/signup`, {
          name,
          email,
          password,

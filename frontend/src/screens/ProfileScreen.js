@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Axios from 'axios';
 import { toast } from "react-toastify";
-import { getError } from "../utils";
+import {baseUrl, getError } from "../utils";
 import Loader from "../components/Loader";
 import MessageBox from "../components/MessageBox";
 
@@ -47,7 +47,7 @@ function ProfileScreen() {
 
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
-      const { data } = await Axios.put('/api/users/profile', {
+      const { data } = await Axios.put(`${baseUrl}/api/users/profile`, {
         name,
         email,
         password
