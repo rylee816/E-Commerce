@@ -11,7 +11,7 @@ import MessageBox from "../components/MessageBox";
 import { getError } from "../utils";
 
 console.log(process.env.REACT_APP_BASE_URL);
-const baseUrl = "http://localhost:3001" || ''
+const baseUrl = process.env.REACT_APP_BASE_URL || '';
 
 function HomeScreen() {
   const [{ loading, error, products }, dispatch] = useReducer(
