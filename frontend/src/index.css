@@ -42,7 +42,11 @@ main {
 
 .img-large {
   max-width: 100%;
-  /* height: 829px; */
+}
+
+.card-img-top {
+  object-fit: cover;
+  max-height: 350px;
 }
 
 .img-thumbnail {
