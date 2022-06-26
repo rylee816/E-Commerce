@@ -155,7 +155,7 @@ function SearchScreen() {
                 <li key={prc.value}>
                   <Link
                     className={prc === category ? "text-bold" : ""}
-                    to={getFilterUrl({ category: prc.value })}
+                    to={getFilterUrl({ price: prc.value })}
                   >
                     {prc.name}
                   </Link>
