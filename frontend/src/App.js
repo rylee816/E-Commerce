@@ -26,6 +26,7 @@ import { useEffect } from "react";
 import {baseUrl, getError } from "./utils";
 import Axios from 'axios';
 import SearchBox from "./components/SearchBox";
+import SearchScreen from "./screens/SearchScreen";
 
 function App() {
   const {state: {cart, userInfo}, dispatch: contextDispatch} = useContext(Store);
@@ -141,6 +142,7 @@ function App() {
             <Route path="/" element={<HomeScreen />}/>
             <Route path="/product/:slug" element={<ProductScreen/>}/>
             <Route path="/cart" element={<CartScreen />} />
+            <Route path="/search" element={<SearchScreen />} />
             <Route path='/signin' element={<LoginScreen />}/>
             <Route path='/signup' element={<SignupScreen />}/>
             <Route path='/shipping' element={<ShippingScreen />}/>
