@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MessageBox from "../components/MessageBox";
 import { Store } from "../Store";
 import Axios from "axios";
+import { baseUrl } from '../utils';
 
 function CartScreen() {
   const {
@@ -24,7 +25,7 @@ function CartScreen() {
 
   const updateCartHandler = async (item, quantity) => {
     const { data } = await Axios.get(
-      `/api/products/id/${item._id}`
+      `${baseUrl}/api/products/id/${item._id}`
     );
     
     if (data.countInStock < item.quantity){
