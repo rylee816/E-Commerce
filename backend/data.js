@@ -59,7 +59,7 @@ const data = {
       image: "/images/p4.jpg",
       price: 65,
       countInStock: 5,
-      brand: "Puma",
+      brand: "Adidas",
       rating: 4.5,
       numReviews: 63,
       description: "high quality product",

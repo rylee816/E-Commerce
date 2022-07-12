@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Axios from 'axios';
 import { Store } from '../Store.js'
 import { toast } from 'react-toastify'
-import {baseUrl, getError } from '../utils.js'
+import { baseUrl, getError } from '../utils.js'
 
 
 function LoginScreen() {

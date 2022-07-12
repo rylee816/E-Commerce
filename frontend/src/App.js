@@ -27,6 +27,9 @@ import {baseUrl, getError } from "./utils";
 import Axios from 'axios';
 import SearchBox from "./components/SearchBox";
 import SearchScreen from "./screens/SearchScreen";
+import ProtectedRoute from "./components/ProtectedRoute";
+import DashboardScreen from "./screens/DashboardScreen";
+import AdminRoute from "./components/AdminRoute";
 
 function App() {
   const {state: {cart, userInfo}, dispatch: contextDispatch} = useContext(Store);
@@ -109,6 +112,22 @@ function App() {
             ) : (
               <Link to="/signin" className="nav-link">Sign In</Link>
             )}
+            {userInfo && userInfo.isAdmin && (
+              <NavDropdown title="Admin" id="admin-nav-dropdown">
+              <LinkContainer to="/admin/dashboard">
+                    <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/productlist">
+                    <NavDropdown.Item>Products</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/orderlist">
+                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/userlist">
+                    <NavDropdown.Item>Users</NavDropdown.Item>
+                </LinkContainer>
+              </NavDropdown>
+            )}
           </Nav>
           </Navbar.Collapse>
           </Container>
@@ -147,10 +166,28 @@ function App() {
             <Route path='/signup' element={<SignupScreen />}/>
             <Route path='/shipping' element={<ShippingScreen />}/>
             <Route path='/payment' element={<PaymentMethodScreen />}/>
-            <Route path='/placeorder' element={<PlaceOrderScreen />}/>
             <Route path='/orders/:id' element={<OrderDetailsScreen />}/>
-            <Route path='/orderhistory' element={<OrderHistoryScreen />}/>
-            <Route path='/profile' element={<ProfileScreen />}/>
+            <Route path='/orderhistory' element={
+              <ProtectedRoute>
+                <OrderHistoryScreen />
+              </ProtectedRoute>
+            }/>
+            <Route path='/placeorder' element={
+              <ProtectedRoute>
+                <PlaceOrderScreen />
+              </ProtectedRoute>
+            }/>
+            <Route path='/profile' element={
+            <ProtectedRoute>
+              <ProfileScreen />
+            </ProtectedRoute>
+            }/>
+            {/* ADMIN ROUTES */}
+            <Route path="/admin/dashboard" element={
+              <AdminRoute>
+                <DashboardScreen />
+              </AdminRoute>
+            }/>
           </Routes>
         </Container>
         </main>
